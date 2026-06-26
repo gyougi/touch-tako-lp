@@ -24,4 +24,4 @@ python3 -m http.server 8135
 - Legal/support pages live in the separate `touch-tako-legal` repo, linked from
   the footer.
 
-© 2026 GLSPACE
+© 2026 GLSPACE 株式会社
