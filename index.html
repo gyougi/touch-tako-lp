@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Touch Tako タッチタコ — こどものタッチタイピング for Mac</title>
+<meta name="description" content="たこと一緒に、こどものタッチタイピング。ホームポジションから単語・短い文まで。指ごとに色分けされたキーボードと、できたら一緒によろこぶ 2.5D のたこ。完全オフライン、広告なし。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<style>
+  :root{
+    --bg:#FBF6EF; --bg2:#FFFDFA; --panel:#FFFFFF; --cream:#FBF1E6;
+    --ink:#2C2A27; --ink2:#6C645B; --dim:#A89F94;
+    --mint:#3FA87E; --mint-b:#5DCAA5; --mint-d:#338468; --mint-soft:#E6F5EF;
+    --peach:#E5824F; --peach-soft:#FBE6D7;
+    --tgt:#74CE42; --tgt-fill:#BBE793; --tgt-bd:#5DA63A; --tgt-ink:#2C5417;
+    --line:rgba(60,48,36,.10); --line2:rgba(60,48,36,.16);
+    --radius:20px; --max:1100px;
+    --font:"Noto Sans JP",-apple-system,BlinkMacSystemFont,"Hiragino Sans","PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
+    --display:"Baloo 2",var(--font);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--font); color:var(--ink); line-height:1.72;
+    -webkit-font-smoothing:antialiased; background:var(--bg);
+    background-image:
+      radial-gradient(820px 480px at 86% -6%, rgba(93,202,165,.16), transparent 60%),
+      radial-gradient(760px 520px at -6% 8%, rgba(233,138,88,.13), transparent 58%),
+      radial-gradient(900px 700px at 50% 118%, rgba(93,202,165,.10), transparent 60%);
+    background-repeat:no-repeat; background-attachment:fixed;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 22px}
+  .accent{color:var(--mint)}
+  .nowrap{white-space:nowrap}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(16px);
+    background:rgba(251,246,239,.74);border-bottom:1px solid var(--line)}
+  .nav-in{display:flex;align-items:center;gap:18px;height:64px}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:700}
+  .brand .ico{width:36px;height:36px;border-radius:10px;flex:none;object-fit:cover;
+    box-shadow:0 5px 16px rgba(180,110,70,.30)}
+  .brand .nm{font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:.01em;line-height:1}
+  .brand small{display:block;font-size:11px;font-weight:500;color:var(--dim);margin-top:2px;font-family:var(--font)}
+  .nav-links{display:flex;gap:24px;margin-left:16px}
+  .nav-links a{color:var(--ink2);font-size:14px;font-weight:600}
+  .nav-links a:hover{color:var(--mint)}
+  .nav-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+  .lang{display:flex;border:1px solid var(--line2);border-radius:999px;overflow:hidden;background:var(--panel)}
+  .lang button{background:none;border:0;color:var(--ink2);font:inherit;font-size:12.5px;font-weight:700;
+    padding:5px 11px;cursor:pointer;transition:.15s}
+  .lang button.on{background:var(--mint);color:#fff}
+
+  .btn{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:14px;
+    padding:12px 19px;border-radius:13px;cursor:pointer;transition:.18s;border:1px solid transparent;white-space:nowrap}
+  .btn-primary{background:linear-gradient(135deg,var(--mint-b),var(--mint-d));color:#fff;
+    box-shadow:0 9px 26px rgba(63,168,126,.30)}
+  .btn-primary:hover{transform:translateY(-1px);box-shadow:0 13px 32px rgba(63,168,126,.40)}
+  .btn-ghost{background:var(--panel);border-color:var(--line2);color:var(--ink)}
+  .btn-ghost:hover{border-color:var(--mint);color:var(--mint)}
+  .nav-cta{padding:9px 16px}
+  .soon{font-size:10px;font-weight:800;letter-spacing:.04em;background:rgba(255,255,255,.28);
+    padding:2px 7px;border-radius:999px}
+  .applogo{width:16px;height:16px}
+  @media(max-width:780px){.nav-links{display:none}.brand small{display:none}
+    .nav-in{gap:10px}.nav-right{gap:9px}.lang button{font-size:11.5px;padding:4px 9px}
+    .nav-cta{padding:8px 13px;font-size:13px}}
+
+  /* hero */
+  .hero{padding:72px 0 40px;display:grid;grid-template-columns:1.02fr .98fr;gap:46px;align-items:center}
+  .pill{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--mint-d);
+    background:var(--mint-soft);border:1px solid rgba(63,168,126,.22);padding:7px 14px;border-radius:999px}
+  .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 9px var(--mint)}
+  h1{font-size:48px;line-height:1.16;letter-spacing:-.01em;margin:20px 0 16px;font-weight:800;text-wrap:balance}
+  .lead{font-size:17px;color:var(--ink2);max-width:31em;text-wrap:pretty}
+  .hero-cta{display:flex;gap:13px;flex-wrap:wrap;margin-top:30px}
+  .hero-note{margin-top:18px;font-size:12.5px;color:var(--dim)}
+  @media(max-width:900px){.hero{grid-template-columns:1fr;padding:30px 0 28px;text-align:center}
+    h1{font-size:36px}.lead{margin-inline:auto}.hero-cta{justify-content:center}
+    .hero-art{order:-1;margin-bottom:6px}}
+
+  /* mac window mock */
+  .hero-art{display:flex;justify-content:center}
+  .mac{width:100%;max-width:430px;border-radius:18px;overflow:hidden;flex:none;
+    background:var(--panel);border:1px solid var(--line2);
+    box-shadow:0 38px 80px rgba(120,80,50,.22),0 4px 14px rgba(120,80,50,.10)}
+  .mac-bar{height:34px;display:flex;align-items:center;gap:8px;padding:0 14px;
+    background:linear-gradient(180deg,#fbfbfb,#f1efec);border-bottom:1px solid var(--line)}
+  .mac-bar i{width:11px;height:11px;border-radius:50%}
+  .d1{background:#ff6159}.d2{background:#ffbd2e}.d3{background:#28c840}
+  .mac-bar .ttl{margin-left:auto;margin-right:auto;font-size:11px;color:var(--dim);font-weight:600;
+    transform:translateX(-13px)}
+  .screen{background:
+      radial-gradient(420px 240px at 50% -10%, rgba(93,202,165,.18), transparent 70%),
+      linear-gradient(180deg,#FDF6EE,#FBEFE3);padding:22px 22px 24px}
+  .stage{display:flex;flex-direction:column;align-items:center;gap:14px}
+  .octo{width:138px;height:auto;animation:bob 3.4s ease-in-out infinite;filter:drop-shadow(0 12px 14px rgba(80,120,100,.22))}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+  .prompt{text-align:center}
+  .prompt .cap{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mint-d)}
+  .key-target{font-family:var(--display);font-weight:800;font-size:40px;line-height:1;color:var(--tgt-ink);
+    display:inline-grid;place-items:center;width:64px;height:64px;border-radius:15px;margin-top:6px;
+    background:var(--tgt-fill);border:2px solid var(--tgt-bd);
+    box-shadow:0 0 0 0 rgba(116,206,66,.55);animation:glow 1.7s ease-in-out infinite}
+  @keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(116,206,66,.50)}50%{box-shadow:0 0 0 9px rgba(116,206,66,0)}}
+  .prompt .fin{font-size:12px;color:var(--ink2);margin-top:8px;font-weight:600}
+  .kbd{display:flex;gap:5px;justify-content:center;flex-wrap:nowrap;margin-top:4px}
+  .key{width:30px;height:36px;border-radius:8px;display:grid;place-items:center;flex:none;
+    font-family:var(--display);font-weight:700;font-size:13px;color:#3a3530;
+    box-shadow:0 3px 0 rgba(0,0,0,.12);position:relative}
+  .key.tk{color:var(--tgt-ink);background:var(--tgt-fill)!important;
+    box-shadow:0 0 0 2px var(--tgt-bd),0 3px 0 rgba(93,166,58,.5);animation:tkp 1.7s ease-in-out infinite}
+  @keyframes tkp{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+  .key .bump{position:absolute;bottom:5px;width:8px;height:2px;border-radius:2px;background:rgba(60,50,40,.35)}
+  @media(max-width:420px){.kbd{gap:4px}.key{width:27px;height:33px}}
+
+  /* trust strip */
+  .strip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0 0}
+  .strip .it{display:flex;align-items:center;gap:13px;background:var(--panel);
+    border:1px solid var(--line);border-radius:15px;padding:16px 17px;box-shadow:0 2px 10px rgba(120,90,60,.05)}
+  .strip .ic{flex:none;width:38px;height:38px;border-radius:11px;display:grid;place-items:center;
+    background:var(--mint-soft);color:var(--mint-d)}
+  .strip b{font-size:14px;font-weight:700;display:block}
+  .strip span{font-size:12px;color:var(--dim)}
+  @media(max-width:760px){.strip{grid-template-columns:1fr}}
+
+  /* sections */
+  section{padding:64px 0}
+  .sec-head{text-align:center;max-width:38em;margin:0 auto 42px}
+  .sec-head .k{color:var(--mint);font-weight:800;font-size:12.5px;letter-spacing:.14em;text-transform:uppercase}
+  .sec-head h2{font-size:33px;font-weight:800;letter-spacing:-.01em;margin:10px 0 12px;text-wrap:balance}
+  .sec-head p{color:var(--ink2);font-size:16px;text-wrap:pretty}
+
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:880px){.grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:560px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+    padding:25px 23px;transition:.2s;box-shadow:0 2px 12px rgba(120,90,60,.05)}
+  .card:hover{border-color:rgba(63,168,126,.35);transform:translateY(-3px);box-shadow:0 14px 30px rgba(120,90,60,.12)}
+  .card .ic{width:48px;height:48px;border-radius:13px;display:grid;place-items:center;margin-bottom:16px;
+    background:var(--mint-soft);color:var(--mint-d)}
+  .card.peach .ic{background:var(--peach-soft);color:var(--peach)}
+  .card h3{font-size:17px;font-weight:700;margin-bottom:8px;text-wrap:balance}
+  .card p{font-size:14px;color:var(--ink2);text-wrap:pretty}
+
+  /* curriculum steps */
+  .steps-band{background:linear-gradient(180deg,#fff,#fffaf4);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .steps{display:flex;align-items:stretch;justify-content:center;gap:0;flex-wrap:wrap;max-width:920px;margin:6px auto 0}
+  .step{flex:1;min-width:130px;text-align:center;position:relative;padding:6px 10px}
+  .step .n{width:42px;height:42px;border-radius:50%;margin:0 auto 12px;display:grid;place-items:center;
+    font-family:var(--display);font-weight:800;font-size:17px;color:#fff;
+    background:linear-gradient(135deg,var(--mint-b),var(--mint-d));box-shadow:0 6px 16px rgba(63,168,126,.28)}
+  .step b{display:block;font-size:14.5px;font-weight:700}
+  .step span{font-size:12.5px;color:var(--dim)}
+  .step:not(:last-child)::after{content:"";position:absolute;top:21px;right:-50%;width:100%;height:2px;
+    background:linear-gradient(90deg,rgba(63,168,126,.4),rgba(63,168,126,.12));z-index:0}
+  @media(max-width:720px){.step:not(:last-child)::after{display:none}.step{min-width:44%}}
+
+  /* privacy band */
+  .band{background:
+      radial-gradient(560px 280px at 50% 0%, rgba(63,168,126,.10), transparent 62%),
+      linear-gradient(180deg,#F4FBF8,#EFF8F3);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .ck{display:grid;grid-template-columns:repeat(2,1fr);gap:15px 30px;max-width:720px;margin:30px auto 0}
+  .ck .row{display:flex;gap:13px;align-items:flex-start}
+  .ck .row .chk{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+    background:var(--mint);color:#fff;margin-top:1px}
+  .ck b{font-weight:700;font-size:15px}
+  .ck small{display:block;color:var(--ink2);font-size:13px;font-weight:400}
+  @media(max-width:620px){.ck{grid-template-columns:1fr}}
+
+  /* pricing */
+  .plan{max-width:440px;margin:0 auto;background:var(--panel);border:1px solid var(--line2);
+    border-radius:24px;padding:34px 32px;position:relative;box-shadow:0 24px 60px rgba(120,90,60,.14);text-align:center}
+  .plan .ribbon{display:inline-block;font-size:12px;font-weight:800;letter-spacing:.03em;color:#fff;
+    background:linear-gradient(135deg,var(--peach),#d96f3c);padding:6px 16px;border-radius:999px;margin-bottom:18px}
+  .plan .price{font-family:var(--display);font-weight:800;font-size:50px;line-height:1;color:var(--ink)}
+  .plan .price small{font-size:18px;font-weight:700;color:var(--dim);font-family:var(--font)}
+  .plan .conv{font-size:13px;color:var(--dim);margin-top:8px}
+  .plan ul{list-style:none;margin:22px 0 4px;display:flex;flex-direction:column;gap:12px;text-align:left}
+  .plan li{display:flex;gap:11px;align-items:flex-start;font-size:14.5px;color:var(--ink2)}
+  .plan li .chk{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;
+    background:var(--mint-soft);color:var(--mint-d);margin-top:1px}
+  .plan .cta{margin-top:26px}
+  .plan .fine{font-size:11.5px;color:var(--dim);margin-top:16px;line-height:1.6;text-wrap:pretty}
+  .plan .fine a{color:var(--mint-d);font-weight:600}
+
+  /* final cta */
+  .final{text-align:center}
+  .final .octo-sm{width:96px;margin:0 auto 18px;filter:drop-shadow(0 10px 12px rgba(80,120,100,.2))}
+  .final h2{font-size:34px;font-weight:800;letter-spacing:-.01em;text-wrap:balance}
+  .final p{color:var(--ink2);margin:12px auto 26px;max-width:30em;text-wrap:pretty}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:34px 0 48px;margin-top:8px}
+  .foot{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
+  .foot-links{display:flex;gap:22px;flex-wrap:wrap}
+  .foot-links a{color:var(--ink2);font-size:13.5px;font-weight:500}
+  .foot-links a:hover{color:var(--mint)}
+  .foot .cp{font-size:12.5px;color:var(--dim)}
+  @media(max-width:680px){.foot{flex-direction:column;align-items:center;text-align:center;gap:14px}
+    .foot-links{justify-content:center;gap:10px 18px}}
+</style>
+</head>
+<body>
+
+<!-- =================== NAV =================== -->
+<nav>
+  <div class="wrap nav-in">
+    <a class="brand" href="#top">
+      <img class="ico" src="icon.png" alt="Touch Tako" width="36" height="36">
+      <span><span class="nm">Touch Tako</span><small data-i18n="brand.sub">タッチタコ</small></span>
+    </a>
+    <div class="nav-links">
+      <a href="#features" data-i18n="nav.features">特長</a>
+      <a href="#learn" data-i18n="nav.learn">学びかた</a>
+      <a href="#privacy" data-i18n="nav.privacy">プライバシー</a>
+      <a href="#pricing" data-i18n="nav.pricing">料金</a>
+    </div>
+    <div class="nav-right">
+      <div class="lang" id="lang">
+        <button data-lang="ja">日</button><button data-lang="en">EN</button><button data-lang="zh">中</button>
+      </div>
+      <!-- TODO: App Store 公開後、このボタンを <a href="（Mac App Store URL）"> に差し替え -->
+      <span class="btn btn-primary nav-cta"><span data-i18n="cta.get">入手</span><span class="soon" data-i18n="cta.soon">近日</span></span>
+    </div>
+  </div>
+</nav>
+
+<!-- =================== HERO =================== -->
+<header id="top" class="wrap hero">
+  <div>
+    <span class="pill"><span class="dot"></span><span data-i18n="hero.badge">完全オフライン・こども向け</span></span>
+    <h1 data-i18n="hero.title">たこと学ぶ、<br>はじめての<span class="accent">タッチタイピング</span>。</h1>
+    <p class="lead" data-i18n="hero.lead">ホームポジションから単語・短い文まで。指ごとに色分けされたキーボードと、できたら一緒によろこぶ 2.5D のたこ。Mac で、こどものペースで。</p>
+    <div class="hero-cta">
+      <span class="btn btn-primary">
+        <svg class="applogo" viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268c-.5-52 42.4-77 44.3-78.2-24.2-35.4-61.8-40.2-75.1-40.7-32-3.3-62.4 18.8-78.6 18.8-16.2 0-41.2-18.4-67.8-17.9-34.9.5-67.1 20.3-85 51.6-36.2 62.8-9.3 155.7 26 206.6 17.2 24.9 37.7 52.8 64.6 51.8 25.9-1 35.7-16.7 67-16.7 31.2 0 40.1 16.7 67.5 16.2 27.9-.5 45.5-25.3 62.6-50.3 19.7-28.8 27.8-56.7 28.3-58.1-.6-.3-54.3-20.9-54.8-82.9zM266.9 117.9c14.3-17.3 23.9-41.4 21.3-65.4-20.6.8-45.5 13.7-60.2 31-13.2 15.3-24.8 39.8-21.7 63.3 23 1.8 46.4-11.7 60.6-28.9z"/></svg>
+        <span data-i18n="cta.appstore">Mac App Store で近日公開</span>
+      </span>
+      <a class="btn btn-ghost" href="#features" data-i18n="cta.learn">特長を見る</a>
+    </div>
+    <p class="hero-note" data-i18n="hero.note">macOS 14 以降 ・ 7日間無料でお試し ・ 広告なし、データ収集なし。</p>
+  </div>
+
+  <div class="hero-art">
+    <div class="mac">
+      <div class="mac-bar"><i class="d1"></i><i class="d2"></i><i class="d3"></i><span class="ttl">Touch Tako</span></div>
+      <div class="screen">
+        <div class="stage">
+          <!-- octopus mascot (mint, idle) -->
+          <svg class="octo" viewBox="0 0 220 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <ellipse cx="110" cy="172" rx="64" ry="13" fill="#3f6e5c" opacity=".14"/>
+            <g>
+              <circle cx="49" cy="158" r="20" fill="#49BA93"/><circle cx="79.5" cy="162" r="20" fill="#49BA93"/>
+              <circle cx="110" cy="163" r="20" fill="#49BA93"/><circle cx="140.5" cy="162" r="20" fill="#49BA93"/>
+              <circle cx="171" cy="158" r="20" fill="#49BA93"/>
+            </g>
+            <ellipse cx="110" cy="92" rx="78" ry="74" fill="#5DCAA5"/>
+            <ellipse cx="84" cy="62" rx="42" ry="30" fill="#9FE1CB" opacity=".55"/>
+            <ellipse cx="110" cy="132" rx="62" ry="34" fill="#43AE83" opacity=".22"/>
+            <!-- cheeks -->
+            <ellipse cx="66" cy="112" rx="13" ry="8.5" fill="#F4A6BE" opacity=".9"/>
+            <ellipse cx="154" cy="112" rx="13" ry="8.5" fill="#F4A6BE" opacity=".9"/>
+            <!-- eyebrows -->
+            <path d="M70 62 q16 -9 31 -2" stroke="#358d6c" stroke-width="5" stroke-linecap="round" fill="none"/>
+            <path d="M150 62 q-16 -9 -31 -2" stroke="#358d6c" stroke-width="5" stroke-linecap="round" fill="none"/>
+            <!-- eyes -->
+            <ellipse cx="88" cy="90" rx="20" ry="23" fill="#fff"/>
+            <ellipse cx="132" cy="90" rx="20" ry="23" fill="#fff"/>
+            <circle cx="92" cy="93" r="9.5" fill="#1B3B32"/>
+            <circle cx="128" cy="93" r="9.5" fill="#1B3B32"/>
+            <circle cx="95.5" cy="89" r="3.2" fill="#fff"/>
+            <circle cx="131.5" cy="89" r="3.2" fill="#fff"/>
+            <!-- mouth -->
+            <path d="M99 116 q11 10 22 0" stroke="#C0556F" stroke-width="4.2" stroke-linecap="round" fill="none"/>
+            <!-- sparkle -->
+            <path d="M183 56 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3z" fill="#FAC775"/>
+          </svg>
+
+          <div class="prompt">
+            <div class="cap" data-i18n="mock.next">つぎのキー</div>
+            <div class="key-target">F</div>
+            <div class="fin" data-i18n="mock.finger">ひだりの ひとさし指</div>
+          </div>
+
+          <!-- home row, finger-coloured -->
+          <div class="kbd">
+            <span class="key" style="background:#B5D4F4">A</span>
+            <span class="key" style="background:#CECBF6">S</span>
+            <span class="key" style="background:#F5C4B3">D</span>
+            <span class="key tk">F<span class="bump"></span></span>
+            <span class="key" style="background:#F4C0D1">G</span>
+            <span class="key" style="background:#F4C0D1">H</span>
+            <span class="key" style="background:#F4C0D1">J<span class="bump"></span></span>
+            <span class="key" style="background:#F5C4B3">K</span>
+            <span class="key" style="background:#CECBF6">L</span>
+            <span class="key" style="background:#B5D4F4">;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- =================== TRUST STRIP =================== -->
+<div class="wrap">
+  <div class="strip">
+    <div class="it"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 2l7 3v6c0 4.5-3 8.3-7 9.5C8 19.3 5 15.5 5 11V5l7-3z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><b data-i18n="trust.1.t">完全オフライン</b><span data-i18n="trust.1.s">端末内だけで動作</span></div></div>
+    <div class="it"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" opacity=".0"/><path d="M7 9l10 6M17 9L7 15" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div><div><b data-i18n="trust.2.t">広告も解析もなし</b><span data-i18n="trust.2.s">データ収集ゼロ</span></div></div>
+    <div class="it"><div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="4" y="10" width="16" height="11" rx="2.5" stroke="currentColor" stroke-width="1.8"/><path d="M8 10V7a4 4 0 018 0v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></div><div><b data-i18n="trust.3.t">保護者ゲート</b><span data-i18n="trust.3.s">設定・購入の前に計算</span></div></div>
+  </div>
+</div>
+
+<!-- =================== FEATURES =================== -->
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="k" data-i18n="feat.k">Features</div>
+      <h2 data-i18n="feat.h">遊びながら、指がおぼえる。</h2>
+      <p data-i18n="feat.p">小さな成功を積み重ねて、見ないで打つへ。こどもが夢中になる仕組みを、ていねいに。</p>
+    </div>
+    <div class="grid">
+      <div class="card">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 19V5M4 19h16M8 19v-6M12 19v-9M16 19V8M20 19v-4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></div>
+        <h3 data-i18n="f1.t">段階式に、全30レッスン</h3>
+        <p data-i18n="f1.p">ホームポジションから上段・下段・数字行、単語、短い文へ。各言語に小学生レベルまでの全30レッスン。</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 12h17M12 3c2.6 2.7 2.6 14.3 0 18M12 3c-2.6 2.7-2.6 14.3 0 18" stroke="currentColor" stroke-width="1.5"/></svg></div>
+        <h3 data-i18n="f2.t">日本語・英語・中国語</h3>
+        <p data-i18n="f2.p">アプリ内でいつでも切替。日本語はかな（漢字＋ふりがな）を見てローマ字、中国語は漢字＋ピンインでピンイン入力。</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="2.5" y="6.5" width="19" height="11" rx="2.5" stroke="currentColor" stroke-width="1.7"/><path d="M6 10h.01M9.5 10h.01M13 10h.01M16.5 10h.01M8 14h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <h3 data-i18n="f3.t">指ごとに色分けキーボード</h3>
+        <p data-i18n="f3.p">どの指で押すかが色でわかる。お使いの配列（ANSI / ISO / JIS）を自動判別して、正しい運指が身につきます。</p>
+      </div>
+      <div class="card peach">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M9 11V5.5a1.5 1.5 0 013 0V10m0 0V4a1.5 1.5 0 013 0v6m0-1a1.5 1.5 0 013 0v6a5 5 0 01-5 5h-1.5a5 5 0 01-3.9-1.9L6 17.5c-1-1.3-.6-2.6.5-3.2.8-.4 1.7-.2 2.3.5L9 15" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <h3 data-i18n="f4.t">次のキーが光る＋両手ガイド</h3>
+        <p data-i18n="f4.p">次に押すキーが緑に光り、両手の運指イラストが「どの指か」をその場で案内。見ないで打つへ自然に。</p>
+      </div>
+      <div class="card peach">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M11 5L6 9H3v6h3l5 4V5z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M15.5 9a4 4 0 010 6M18.5 6.5a8 8 0 010 11" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
+        <h3 data-i18n="f5.t">キーを音声で読み上げ</h3>
+        <p data-i18n="f5.p">押すキーを声でガイド。文字が読めなくても遊べます。声のキャラクターも選べ、音声の言語は別に設定できます。</p>
+      </div>
+      <div class="card">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3l2.5 5.3 5.5.8-4 4 1 5.6L12 21l-5 2.7 1-5.6-4-4 5.5-.8L12 3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg></div>
+        <h3 data-i18n="f6.t">なかま・配色・紙吹雪</h3>
+        <p data-i18n="f6.p">たこ・ねこ・ひよこ・かえる・ロボの5匹から相棒を選択。5つの配色テーマ、3つ星クリアで紙吹雪のお祝い。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== CURRICULUM =================== -->
+<section id="learn" class="steps-band">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="k" data-i18n="learn.k">How it grows</div>
+      <h2 data-i18n="learn.h">こどものペースで、少しずつ。</h2>
+      <p data-i18n="learn.p">いきなり文章ではなく、ホームポジションから一段ずつ。できたを積み重ねて、短い文まで。</p>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="n">1</div><b data-i18n="s1.t">ホームポジション</b><span data-i18n="s1.s">中段から指の家を</span></div>
+      <div class="step"><div class="n">2</div><b data-i18n="s2.t">上段・下段</b><span data-i18n="s2.s">手を広げる</span></div>
+      <div class="step"><div class="n">3</div><b data-i18n="s3.t">数字行</b><span data-i18n="s3.s">いちばん上まで</span></div>
+      <div class="step"><div class="n">4</div><b data-i18n="s4.t">単語</b><span data-i18n="s4.s">つなげて打つ</span></div>
+      <div class="step"><div class="n">5</div><b data-i18n="s5.t">短い文</b><span data-i18n="s5.s">見ないで打つへ</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== PRIVACY =================== -->
+<section id="privacy" class="band">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="k" data-i18n="priv.k">Privacy by design</div>
+      <h2 data-i18n="priv.h">こどもに、安心して。</h2>
+      <p data-i18n="priv.p">完全オフラインで動作し、広告も、アクセス解析も、第三者 SDK もありません。ユーザーデータを一切収集しません。</p>
+    </div>
+    <div class="ck">
+      <div class="row"><span class="chk"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><b data-i18n="priv.1.t">完全オフラインで動作</b><small data-i18n="priv.1.s">インターネット通信はありません</small></div></div>
+      <div class="row"><span class="chk"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><b data-i18n="priv.2.t">広告・解析・第三者 SDK なし</b><small data-i18n="priv.2.s">App Privacy は「データ収集なし」</small></div></div>
+      <div class="row"><span class="chk"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><b data-i18n="priv.3.t">学習の記録は端末内に</b><small data-i18n="priv.3.s">進み具合は本体にのみ保存</small></div></div>
+      <div class="row"><span class="chk"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><b data-i18n="priv.4.t">保護者ゲート</b><small data-i18n="priv.4.s">設定・購入の前にかんたんな計算</small></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== PRICING =================== -->
+<section id="pricing">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="k" data-i18n="price.k">Pricing</div>
+      <h2 data-i18n="price.h">まずは7日間、無料で。</h2>
+      <p data-i18n="price.p">気に入ったら続けるだけ。月額のサブスクリプションで、全レッスンとすべてのなかま・配色を。</p>
+    </div>
+    <div class="plan">
+      <div class="ribbon" data-i18n="plan.ribbon">7日間 無料トライアル</div>
+      <div class="price">$1.99<small data-i18n="plan.mo">/月</small></div>
+      <div class="conv" data-i18n="plan.conv">各地域の価格は Apple が自動換算（日本 約 ¥300）</div>
+      <ul>
+        <li><span class="chk"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span data-i18n="plan.1">全30レッスン × 日本語・英語・中国語</span></li>
+        <li><span class="chk"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span data-i18n="plan.2">5匹のなかま・5つの配色テーマ</span></li>
+        <li><span class="chk"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span data-i18n="plan.3">音声ガイド・キャラクターボイス</span></li>
+        <li><span class="chk"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span data-i18n="plan.4">追加課金なし・端末内で完結</span></li>
+      </ul>
+      <div class="cta">
+        <span class="btn btn-primary" style="width:100%;justify-content:center">
+          <svg class="applogo" viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268c-.5-52 42.4-77 44.3-78.2-24.2-35.4-61.8-40.2-75.1-40.7-32-3.3-62.4 18.8-78.6 18.8-16.2 0-41.2-18.4-67.8-17.9-34.9.5-67.1 20.3-85 51.6-36.2 62.8-9.3 155.7 26 206.6 17.2 24.9 37.7 52.8 64.6 51.8 25.9-1 35.7-16.7 67-16.7 31.2 0 40.1 16.7 67.5 16.2 27.9-.5 45.5-25.3 62.6-50.3 19.7-28.8 27.8-56.7 28.3-58.1-.6-.3-54.3-20.9-54.8-82.9zM266.9 117.9c14.3-17.3 23.9-41.4 21.3-65.4-20.6.8-45.5 13.7-60.2 31-13.2 15.3-24.8 39.8-21.7 63.3 23 1.8 46.4-11.7 60.6-28.9z"/></svg>
+          <span data-i18n="cta.appstore">Mac App Store で近日公開</span>
+        </span>
+      </div>
+      <p class="fine" data-i18n="plan.fine">サブスクリプションは購入確認時に Apple ID へ課金され、期間終了の24時間前までに解約しない限り自動更新されます。いつでも「システム設定 ▸ Apple ID」から管理できます。<a href="https://gyougi.github.io/touch-tako-legal/terms.html">利用規約</a> ・ <a href="https://gyougi.github.io/touch-tako-legal/privacy.html">プライバシー</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- =================== FINAL CTA =================== -->
+<section class="final">
+  <div class="wrap">
+    <svg class="octo-sm" viewBox="0 0 220 210" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <ellipse cx="110" cy="172" rx="64" ry="13" fill="#3f6e5c" opacity=".12"/>
+      <g><circle cx="49" cy="158" r="20" fill="#49BA93"/><circle cx="79.5" cy="162" r="20" fill="#49BA93"/><circle cx="110" cy="163" r="20" fill="#49BA93"/><circle cx="140.5" cy="162" r="20" fill="#49BA93"/><circle cx="171" cy="158" r="20" fill="#49BA93"/></g>
+      <ellipse cx="110" cy="92" rx="78" ry="74" fill="#5DCAA5"/>
+      <ellipse cx="84" cy="62" rx="42" ry="30" fill="#9FE1CB" opacity=".55"/>
+      <ellipse cx="66" cy="112" rx="13" ry="8.5" fill="#F4A6BE" opacity=".9"/><ellipse cx="154" cy="112" rx="13" ry="8.5" fill="#F4A6BE" opacity=".9"/>
+      <path d="M70 62 q16 -9 31 -2" stroke="#358d6c" stroke-width="5" stroke-linecap="round" fill="none"/><path d="M150 62 q-16 -9 -31 -2" stroke="#358d6c" stroke-width="5" stroke-linecap="round" fill="none"/>
+      <ellipse cx="88" cy="90" rx="20" ry="23" fill="#fff"/><ellipse cx="132" cy="90" rx="20" ry="23" fill="#fff"/>
+      <circle cx="92" cy="93" r="9.5" fill="#1B3B32"/><circle cx="128" cy="93" r="9.5" fill="#1B3B32"/>
+      <circle cx="95.5" cy="89" r="3.2" fill="#fff"/><circle cx="131.5" cy="89" r="3.2" fill="#fff"/>
+      <path d="M97 114 q13 13 26 0" stroke="#C0556F" stroke-width="4.2" stroke-linecap="round" fill="none"/>
+    </svg>
+    <h2 data-i18n="final.h">たこと一緒に、はじめよう。</h2>
+    <p data-i18n="final.p">見ないで打つ、はじめの一歩を。こどものペースで、安心して。</p>
+    <span class="btn btn-primary">
+      <svg class="applogo" viewBox="0 0 384 512" fill="currentColor"><path d="M318.7 268c-.5-52 42.4-77 44.3-78.2-24.2-35.4-61.8-40.2-75.1-40.7-32-3.3-62.4 18.8-78.6 18.8-16.2 0-41.2-18.4-67.8-17.9-34.9.5-67.1 20.3-85 51.6-36.2 62.8-9.3 155.7 26 206.6 17.2 24.9 37.7 52.8 64.6 51.8 25.9-1 35.7-16.7 67-16.7 31.2 0 40.1 16.7 67.5 16.2 27.9-.5 45.5-25.3 62.6-50.3 19.7-28.8 27.8-56.7 28.3-58.1-.6-.3-54.3-20.9-54.8-82.9zM266.9 117.9c14.3-17.3 23.9-41.4 21.3-65.4-20.6.8-45.5 13.7-60.2 31-13.2 15.3-24.8 39.8-21.7 63.3 23 1.8 46.4-11.7 60.6-28.9z"/></svg>
+      <span data-i18n="cta.appstore">Mac App Store で近日公開</span>
+    </span>
+  </div>
+</section>
+
+<!-- =================== FOOTER =================== -->
+<footer>
+  <div class="wrap foot">
+    <div class="foot-links">
+      <a href="https://gyougi.github.io/touch-tako-legal/support.html" data-i18n="foot.support">サポート</a>
+      <a href="https://gyougi.github.io/touch-tako-legal/privacy.html" data-i18n="foot.privacy">プライバシーポリシー</a>
+      <a href="https://gyougi.github.io/touch-tako-legal/terms.html" data-i18n="foot.terms">利用規約</a>
+      <a href="mailto:gyou.gi@glspace.co.jp">gyou.gi@glspace.co.jp</a>
+    </div>
+    <div class="cp">© 2026 GLSPACE</div>
+  </div>
+</footer>
+
+<script>
+const I18N = {
+ja:{
+"brand.sub":"タッチタコ","nav.features":"特長","nav.learn":"学びかた","nav.privacy":"プライバシー","nav.pricing":"料金",
+"cta.get":"入手","cta.soon":"近日","cta.appstore":"Mac App Store で近日公開","cta.learn":"特長を見る",
+"hero.badge":"完全オフライン・こども向け","hero.title":"たこと学ぶ、<br>はじめての<span class='accent'>タッチタイピング</span>。","hero.lead":"ホームポジションから単語・短い文まで。指ごとに色分けされたキーボードと、できたら一緒によろこぶ 2.5D のたこ。Mac で、こどものペースで。","hero.note":"macOS 14 以降 ・ 7日間無料でお試し ・ 広告なし、データ収集なし。",
+"mock.next":"つぎのキー","mock.finger":"ひだりの ひとさし指",
+"trust.1.t":"完全オフライン","trust.1.s":"端末内だけで動作","trust.2.t":"広告も解析もなし","trust.2.s":"データ収集ゼロ","trust.3.t":"保護者ゲート","trust.3.s":"設定・購入の前に計算",
+"feat.k":"Features","feat.h":"遊びながら、指がおぼえる。","feat.p":"小さな成功を積み重ねて、見ないで打つへ。こどもが夢中になる仕組みを、ていねいに。",
+"f1.t":"段階式に、全30レッスン","f1.p":"ホームポジションから上段・下段・数字行、単語、短い文へ。各言語に小学生レベルまでの全30レッスン。",
+"f2.t":"日本語・英語・中国語","f2.p":"アプリ内でいつでも切替。日本語はかな（漢字＋ふりがな）を見てローマ字、中国語は漢字＋ピンインでピンイン入力。",
+"f3.t":"指ごとに色分けキーボード","f3.p":"どの指で押すかが色でわかる。お使いの配列（ANSI / ISO / JIS）を自動判別して、正しい運指が身につきます。",
+"f4.t":"次のキーが光る＋両手ガイド","f4.p":"次に押すキーが緑に光り、両手の運指イラストが「どの指か」をその場で案内。見ないで打つへ自然に。",
+"f5.t":"キーを音声で読み上げ","f5.p":"押すキーを声でガイド。文字が読めなくても遊べます。声のキャラクターも選べ、音声の言語は別に設定できます。",
+"f6.t":"なかま・配色・紙吹雪","f6.p":"たこ・ねこ・ひよこ・かえる・ロボの5匹から相棒を選択。5つの配色テーマ、3つ星クリアで紙吹雪のお祝い。",
+"learn.k":"How it grows","learn.h":"こどものペースで、少しずつ。","learn.p":"いきなり文章ではなく、ホームポジションから一段ずつ。できたを積み重ねて、短い文まで。",
+"s1.t":"ホームポジション","s1.s":"中段から指の家を","s2.t":"上段・下段","s2.s":"手を広げる","s3.t":"数字行","s3.s":"いちばん上まで","s4.t":"単語","s4.s":"つなげて打つ","s5.t":"短い文","s5.s":"見ないで打つへ",
+"priv.k":"Privacy by design","priv.h":"こどもに、安心して。","priv.p":"完全オフラインで動作し、広告も、アクセス解析も、第三者 SDK もありません。ユーザーデータを一切収集しません。",
+"priv.1.t":"完全オフラインで動作","priv.1.s":"インターネット通信はありません","priv.2.t":"広告・解析・第三者 SDK なし","priv.2.s":"App Privacy は「データ収集なし」","priv.3.t":"学習の記録は端末内に","priv.3.s":"進み具合は本体にのみ保存","priv.4.t":"保護者ゲート","priv.4.s":"設定・購入の前にかんたんな計算",
+"price.k":"Pricing","price.h":"まずは7日間、無料で。","price.p":"気に入ったら続けるだけ。月額のサブスクリプションで、全レッスンとすべてのなかま・配色を。",
+"plan.ribbon":"7日間 無料トライアル","plan.mo":"/月","plan.conv":"各地域の価格は Apple が自動換算（日本 約 ¥300）","plan.1":"全30レッスン × 日本語・英語・中国語","plan.2":"5匹のなかま・5つの配色テーマ","plan.3":"音声ガイド・キャラクターボイス","plan.4":"追加課金なし・端末内で完結",
+"plan.fine":"サブスクリプションは購入確認時に Apple ID へ課金され、期間終了の24時間前までに解約しない限り自動更新されます。いつでも「システム設定 ▸ Apple ID」から管理できます。<a href='https://gyougi.github.io/touch-tako-legal/terms.html'>利用規約</a> ・ <a href='https://gyougi.github.io/touch-tako-legal/privacy.html'>プライバシー</a>",
+"final.h":"たこと一緒に、はじめよう。","final.p":"見ないで打つ、はじめの一歩を。こどものペースで、安心して。",
+"foot.support":"サポート","foot.privacy":"プライバシーポリシー","foot.terms":"利用規約"
+},
+en:{
+"brand.sub":"Touch typing for kids","nav.features":"Features","nav.learn":"How it works","nav.privacy":"Privacy","nav.pricing":"Pricing",
+"cta.get":"Get","cta.soon":"Soon","cta.appstore":"Coming soon to the Mac App Store","cta.learn":"See features",
+"hero.badge":"Fully on-device · For kids","hero.title":"Learn to touch type,<br>with an <span class='accent'>octopus</span>.","hero.lead":"From the home row to words and short sentences. A per-finger color-coded keyboard, and a round 2.5D octopus that cheers along — on Mac, at a kid's pace.","hero.note":"macOS 14+ · 7-day free trial · No ads, no data collection.",
+"mock.next":"Next key","mock.finger":"left index finger",
+"trust.1.t":"Fully on-device","trust.1.s":"Runs entirely offline","trust.2.t":"No ads, no analytics","trust.2.s":"Zero data collection","trust.3.t":"Parental gate","trust.3.s":"Math before settings & buying",
+"feat.k":"Features","feat.h":"Play, and the fingers learn.","feat.p":"Small wins, one after another, all the way to typing without looking. Thoughtfully built to keep kids engaged.",
+"f1.t":"30 lessons, step by step","f1.p":"Home row → top/bottom rows → number row → words → short sentences. 30 lessons per language, up to an elementary-school level.",
+"f2.t":"Japanese, English, Chinese","f2.p":"Switch anytime in-app. Japanese: read kana (kanji + furigana) and type romaji. Chinese: read 汉字 with pinyin and type pinyin.",
+"f3.t":"Per-finger color keyboard","f3.p":"Color shows which finger to use. Auto-detects your layout (ANSI / ISO / JIS) so the right fingering becomes a habit.",
+"f4.t":"Next key glows + hand guide","f4.p":"The next key glows green, and a two-hands diagram shows exactly which finger — guiding kids naturally toward typing blind.",
+"f5.t":"Spoken target keys","f5.p":"Each key is read aloud, so pre-readers can play too. Pick a voice character, and set the voice language separately.",
+"f6.t":"Friends, themes, confetti","f6.p":"Pick your buddy from 5 — octopus, cat, chick, frog, robot. Five color themes, and confetti on a 3-star clear.",
+"learn.k":"How it grows","learn.h":"At a kid's pace, little by little.","learn.p":"Not whole sentences from day one — one row at a time, starting at the home row. Wins add up, all the way to short sentences.",
+"s1.t":"Home row","s1.s":"A home for each finger","s2.t":"Top & bottom","s2.s":"Reach out","s3.t":"Number row","s3.s":"All the way up","s4.t":"Words","s4.s":"String them together","s5.t":"Short sentences","s5.s":"Type without looking",
+"priv.k":"Privacy by design","priv.h":"Peace of mind, for kids.","priv.p":"Works fully offline. No ads, no analytics, no third-party SDKs. We do not collect any user data.",
+"priv.1.t":"Works fully offline","priv.1.s":"No internet connection at all","priv.2.t":"No ads, analytics, or 3rd-party SDKs","priv.2.s":"App Privacy: Data Not Collected","priv.3.t":"Progress stays on-device","priv.3.s":"Saved only on your Mac","priv.4.t":"Parental gate","priv.4.s":"Simple math before settings & purchases",
+"price.k":"Pricing","price.h":"Free for the first 7 days.","price.p":"Like it? Just keep going. A monthly subscription unlocks every lesson, every friend, and every theme.",
+"plan.ribbon":"7-day free trial","plan.mo":"/mo","plan.conv":"Apple converts the price per region automatically","plan.1":"All 30 lessons × Japanese · English · Chinese","plan.2":"5 friends · 5 color themes","plan.3":"Voice guidance · character voices","plan.4":"No extra purchases · all on-device",
+"plan.fine":"Subscriptions are charged to your Apple ID at confirmation of purchase and renew automatically unless canceled at least 24 hours before the period ends. Manage anytime in System Settings ▸ Apple ID. <a href='https://gyougi.github.io/touch-tako-legal/terms.html'>Terms</a> · <a href='https://gyougi.github.io/touch-tako-legal/privacy.html'>Privacy</a>",
+"final.h":"Start, together with an octopus.","final.p":"The first step toward typing without looking — at a kid's pace, with peace of mind.",
+"foot.support":"Support","foot.privacy":"Privacy Policy","foot.terms":"Terms of Use"
+},
+zh:{
+"brand.sub":"儿童盲打练习","nav.features":"特点","nav.learn":"学习路径","nav.privacy":"隐私","nav.pricing":"价格",
+"cta.get":"获取","cta.soon":"即将","cta.appstore":"即将登陆 Mac App Store","cta.learn":"查看特点",
+"hero.badge":"完全离线 · 专为孩子","hero.title":"和小章鱼一起，<br>学会<span class='accent'>盲打</span>。","hero.lead":"从基准键位到单词、短句。按手指分色的键盘，加上一只打对就和你一起开心的 2.5D 小章鱼。在 Mac 上，按孩子的节奏来。","hero.note":"macOS 14 以上 · 7 天免费试用 · 无广告、不收集数据。",
+"mock.next":"下一个键","mock.finger":"左手食指",
+"trust.1.t":"完全离线","trust.1.s":"只在设备本地运行","trust.2.t":"无广告无分析","trust.2.s":"零数据收集","trust.3.t":"家长验证","trust.3.s":"设置与购买前先做算术",
+"feat.k":"特点","feat.h":"边玩，手指边记住。","feat.p":"把一个个小小的成功叠起来，走向不看键盘也能打。用心设计，让孩子愿意一直玩下去。",
+"f1.t":"循序渐进，共 30 节课","f1.p":"基准键位 → 上排／下排 → 数字行 → 单词 → 短句。每种语言都有到小学水平的 30 节课。",
+"f2.t":"日语、英语、中文","f2.p":"应用内随时切换。日语看假名（汉字＋振假名）打罗马字，中文看汉字＋拼音打拼音。",
+"f3.t":"按手指分色的键盘","f3.p":"用颜色告诉孩子该用哪根手指。自动识别你的键盘配列（ANSI / ISO / JIS），把正确指法练成习惯。",
+"f4.t":"下一个键发光＋双手引导","f4.p":"下一个要按的键会发绿光，双手运指图当场指出「用哪根手指」，自然走向不看键盘。",
+"f5.t":"语音朗读目标键","f5.p":"每个键都会读出声，还不识字也能玩。可选语音角色，语音语言也能单独设置。",
+"f6.t":"伙伴 · 配色 · 彩纸","f6.p":"章鱼、猫、小鸡、青蛙、机器人，5 个伙伴任选。5 套配色主题，三星通关还有彩纸庆祝。",
+"learn.k":"学习路径","learn.h":"按孩子的节奏，一点一点来。","learn.p":"不是一上来就打整句，而是从基准键位一排一排来。把「做到了」叠起来，一直到短句。",
+"s1.t":"基准键位","s1.s":"先给手指安个家","s2.t":"上排・下排","s2.s":"伸展手指","s3.t":"数字行","s3.s":"够到最上排","s4.t":"单词","s4.s":"连起来打","s5.t":"短句","s5.s":"走向盲打",
+"priv.k":"隐私优先","priv.h":"让孩子，放心玩。","priv.p":"完全离线运行。没有广告、没有统计分析、没有任何第三方 SDK。我们不收集任何用户数据。",
+"priv.1.t":"完全离线运行","priv.1.s":"没有任何联网","priv.2.t":"无广告 / 分析 / 第三方 SDK","priv.2.s":"App 隐私：不收集数据","priv.3.t":"学习记录留在本机","priv.3.s":"进度只保存在你的 Mac 上","priv.4.t":"家长验证","priv.4.s":"设置与购买前做简单算术",
+"price.k":"价格","price.h":"先免费试 7 天。","price.p":"喜欢就继续。每月订阅，解锁全部课程、全部伙伴与配色。",
+"plan.ribbon":"7 天免费试用","plan.mo":"/月","plan.conv":"各地区价格由 Apple 自动换算","plan.1":"全部 30 节课 × 日语・英语・中文","plan.2":"5 个伙伴・5 套配色主题","plan.3":"语音引导・角色配音","plan.4":"无额外内购・全程端内完成",
+"plan.fine":"订阅在确认购买时从你的 Apple ID 扣费，若未在当期结束前 24 小时取消则自动续订。可随时在「系统设置 ▸ Apple ID」中管理。<a href='https://gyougi.github.io/touch-tako-legal/terms.html'>使用条款</a> · <a href='https://gyougi.github.io/touch-tako-legal/privacy.html'>隐私政策</a>",
+"final.h":"和小章鱼一起，开始吧。","final.p":"迈出不看键盘打字的第一步——按孩子的节奏，安心地玩。",
+"foot.support":"支持","foot.privacy":"隐私政策","foot.terms":"使用条款"
+}
+};
+function setLang(l){
+  document.documentElement.lang = ({ja:'ja',en:'en',zh:'zh-Hans'})[l]||l;
+  var pf={ja:'"Noto Sans JP"',en:'"Noto Sans JP"',zh:'"Noto Sans SC"'}[l];
+  document.documentElement.style.setProperty('--font', pf+',-apple-system,BlinkMacSystemFont,"Hiragino Sans","PingFang SC","Microsoft YaHei","Segoe UI",sans-serif');
+  var d=I18N[l];
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n'); if(d[k]!=null) el.innerHTML=d[k];
+  });
+  document.querySelectorAll('#lang button').forEach(function(b){
+    b.classList.toggle('on', b.getAttribute('data-lang')===l);
+  });
+}
+// Map a system locale to one of our three UI languages (Simplified Chinese only).
+function matchLang(code){
+  var n=(code||'').toLowerCase();
+  if(n.indexOf('ja')===0) return 'ja';
+  if(n.indexOf('zh')===0) return 'zh';
+  if(n.indexOf('en')===0) return 'en';
+  return null;
+}
+// Follow the browser's language priority; first supported match wins, else Japanese.
+function detectLang(){
+  var list=(navigator.languages&&navigator.languages.length)?navigator.languages:[navigator.language||'ja'];
+  for(var i=0;i<list.length;i++){ var m=matchLang(list[i]); if(m) return m; }
+  return 'ja';
+}
+document.querySelectorAll('#lang button').forEach(function(b){
+  b.addEventListener('click',function(){ setLang(b.getAttribute('data-lang')); });
+});
+(function(){ setLang(detectLang()); })();
+</script>
+</body>
+</html>
