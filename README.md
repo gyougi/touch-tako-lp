@@ -20,9 +20,7 @@ python3 -m http.server 8135
 
 ## Notes
 
-- The "Coming soon to the Mac App Store" button is a placeholder until the app is
-  live. Search `TODO` in `index.html` for the two spots to swap in the App Store
-  URL once it has an ID.
+- App Store: https://apps.apple.com/app/id6782324502 (wired into all CTAs).
 - Legal/support pages live in the separate `touch-tako-legal` repo, linked from
   the footer.
 
