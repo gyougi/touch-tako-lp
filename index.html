@@ -284,7 +284,7 @@
           <div class="prompt">
             <div class="cap" data-i18n="mock.next">つぎのキー</div>
             <div class="key-target">F</div>
-            <div class="fin" data-i18n="mock.finger">ひだりの ひとさし指</div>
+            <div class="fin">ひだりの ひとさし指</div>
           </div>
 
           <!-- home row, finger-coloured -->
@@ -292,7 +292,7 @@
             <span class="key" style="background:#B5D4F4">A</span>
             <span class="key" style="background:#CECBF6">S</span>
             <span class="key" style="background:#F5C4B3">D</span>
-            <span class="key tk">F<span class="bump"></span></span>
+            <span class="key tk" style="background:#F4C0D1">F<span class="bump"></span></span>
             <span class="key" style="background:#F4C0D1">G</span>
             <span class="key" style="background:#F4C0D1">H</span>
             <span class="key" style="background:#F4C0D1">J<span class="bump"></span></span>
@@ -542,6 +542,7 @@ function setLang(l){
   document.querySelectorAll('#lang button').forEach(function(b){
     b.classList.toggle('on', b.getAttribute('data-lang')===l);
   });
+  mockLang = l; renderMock();
 }
 // Map a system locale to one of our three UI languages (Simplified Chinese only).
 function matchLang(code){
@@ -560,6 +561,41 @@ function detectLang(){
 document.querySelectorAll('#lang button').forEach(function(b){
   b.addEventListener('click',function(){ setLang(b.getAttribute('data-lang')); });
 });
+
+// --- Hero mock: auto-cycle the target key across the home row ---
+// Each step updates the target card letter, the finger caption (in the current
+// language), and which keyboard key glows green — so the mock demos the game.
+var mockLang='ja', mockIdx=3; // start on F, matching the static markup
+var MOCK_KEYS=[
+  {k:'A',fin:{ja:'ひだりの こゆび',    en:'left pinky',   zh:'左手小指'}},
+  {k:'S',fin:{ja:'ひだりの くすりゆび', en:'left ring',    zh:'左手无名指'}},
+  {k:'D',fin:{ja:'ひだりの なかゆび',  en:'left middle',  zh:'左手中指'}},
+  {k:'F',fin:{ja:'ひだりの ひとさし指', en:'left index',   zh:'左手食指'}},
+  {k:'G',fin:{ja:'ひだりの ひとさし指', en:'left index',   zh:'左手食指'}},
+  {k:'H',fin:{ja:'みぎの ひとさし指',  en:'right index',  zh:'右手食指'}},
+  {k:'J',fin:{ja:'みぎの ひとさし指',  en:'right index',  zh:'右手食指'}},
+  {k:'K',fin:{ja:'みぎの なかゆび',   en:'right middle', zh:'右手中指'}},
+  {k:'L',fin:{ja:'みぎの くすりゆび',  en:'right ring',   zh:'右手无名指'}},
+  {k:';',fin:{ja:'みぎの こゆび',     en:'right pinky',  zh:'右手小指'}}
+];
+function renderMock(){
+  var step=MOCK_KEYS[mockIdx];
+  var t=document.querySelector('.key-target'); if(!t) return;
+  t.textContent=step.k;
+  var fin=document.querySelector('.prompt .fin'); if(fin) fin.textContent=step.fin[mockLang]||step.fin.ja;
+  document.querySelectorAll('.kbd .key').forEach(function(el,i){ el.classList.toggle('tk', i===mockIdx); });
+}
+(function(){
+  // Respect users who prefer reduced motion — leave it on a static "F".
+  if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  setInterval(function(){
+    mockIdx=(mockIdx+1)%MOCK_KEYS.length;
+    renderMock();
+    var t=document.querySelector('.key-target');
+    if(t&&t.animate) t.animate([{transform:'scale(.8)'},{transform:'scale(1.07)'},{transform:'scale(1)'}],{duration:340,easing:'cubic-bezier(.2,.8,.3,1)'});
+  },1700);
+})();
+
 (function(){ setLang(detectLang()); })();
 </script>
 </body>
