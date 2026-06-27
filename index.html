@@ -562,9 +562,10 @@ document.querySelectorAll('#lang button').forEach(function(b){
   b.addEventListener('click',function(){ setLang(b.getAttribute('data-lang')); });
 });
 
-// --- Hero mock: auto-cycle the target key across the home row ---
-// Each step updates the target card letter, the finger caption (in the current
-// language), and which keyboard key glows green — so the mock demos the game.
+// --- Hero mock: random typing demo across the home row ---
+// Each step picks a random key (never the same twice in a row) and updates the
+// target card letter, the finger caption (in the current language), and which
+// keyboard key glows green — a lively "kid typing" feel.
 var mockLang='ja', mockIdx=3; // start on F, matching the static markup
 var MOCK_KEYS=[
   {k:'A',fin:{ja:'ひだりの こゆび',    en:'left pinky',   zh:'左手小指'}},
@@ -588,12 +589,15 @@ function renderMock(){
 (function(){
   // Respect users who prefer reduced motion — leave it on a static "F".
   if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  setInterval(function(){
-    mockIdx=(mockIdx+1)%MOCK_KEYS.length;
+  function nextKey(){
+    var n; do { n=Math.floor(Math.random()*MOCK_KEYS.length); } while(n===mockIdx);
+    mockIdx=n;
     renderMock();
     var t=document.querySelector('.key-target');
     if(t&&t.animate) t.animate([{transform:'scale(.8)'},{transform:'scale(1.07)'},{transform:'scale(1)'}],{duration:340,easing:'cubic-bezier(.2,.8,.3,1)'});
-  },1700);
+    setTimeout(nextKey, 850+Math.random()*750); // varied cadence, like real typing
+  }
+  setTimeout(nextKey, 1200);
 })();
 
 (function(){ setLang(detectLang()); })();
