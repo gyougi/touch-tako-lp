@@ -55,6 +55,8 @@
   .lang button{background:none;border:0;color:var(--ink2);font:inherit;font-size:12.5px;font-weight:700;
     padding:5px 11px;cursor:pointer;transition:.15s}
   .lang button.on{background:var(--mint);color:#fff}
+  .lang button .ls{display:none}
+  @media(max-width:560px){.lang button .lf{display:none}.lang button .ls{display:inline}}
 
   .btn{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:14px;
     padding:12px 19px;border-radius:13px;cursor:pointer;transition:.18s;border:1px solid transparent;white-space:nowrap}
@@ -197,8 +199,11 @@
 
   /* footer */
   footer{border-top:1px solid var(--line);padding:34px 0 48px;margin-top:8px}
-  .foot{display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between}
-  .foot-links{display:flex;gap:22px;flex-wrap:wrap}
+  .foot{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px}
+  .foot-brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;color:var(--ink)}
+  .foot-brand img{width:30px;height:30px;border-radius:8px;display:block;flex:0 0 auto;object-fit:cover}
+  .foot-tag{color:var(--ink2);font-size:13.5px;max-width:460px;line-height:1.6}
+  .foot-links{display:flex;gap:22px;flex-wrap:wrap;justify-content:center}
   .foot-links a{color:var(--ink2);font-size:13.5px;font-weight:500}
   .foot-links a:hover{color:var(--mint)}
   .foot-home{display:inline-flex;align-items:center;gap:8px;transition:transform .2s ease}
@@ -226,7 +231,7 @@
     </div>
     <div class="nav-right">
       <div class="lang" id="lang">
-        <button data-lang="ja">日</button><button data-lang="en">EN</button><button data-lang="zh">中</button>
+        <button data-lang="ja"><span class="lf">日本語</span><span class="ls">日</span></button><button data-lang="en">EN</button><button data-lang="zh"><span class="lf">简体</span><span class="ls">简</span></button>
       </div>
       <a class="btn btn-primary nav-cta" href="https://apps.apple.com/app/id6782324502"><span data-i18n="cta.get">入手</span></a>
     </div>
@@ -452,6 +457,8 @@
 <!-- =================== FOOTER =================== -->
 <footer>
   <div class="wrap foot">
+    <div class="foot-brand"><img src="icon.png" alt="" width="30" height="30" />Touch Tako</div>
+    <p class="foot-tag" data-i18n="final.p">見ないで打つ、はじめの一歩を。こどものペースで、安心して。</p>
     <div class="foot-links">
       <a class="foot-home" href="https://glspace.co.jp/" aria-label="GLSPACE コーポレートサイトへ"><svg class="gl-mark" viewBox="0 0 64 64" fill="none" aria-hidden="true"><polygon points="32,3 57,17.5 57,46.5 32,61 7,46.5 7,17.5" stroke="currentColor" stroke-width="3.4" stroke-linejoin="round"/><polyline points="12,45 22,34 28,41 32,25 36,41 42,34 52,45" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><circle cx="32" cy="25" r="1.7" fill="var(--mint)"/></svg>GLSPACE</a>
       <a href="https://gyougi.github.io/touch-tako-legal/support.html" data-i18n="foot.support">サポート</a>
