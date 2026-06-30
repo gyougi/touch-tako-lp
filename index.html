@@ -150,7 +150,8 @@
   .sec-head p{color:var(--ink2);font-size:16px;text-wrap:pretty}
 
   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-  @media(max-width:880px){.grid{grid-template-columns:1fr 1fr}}
+  .grid>.card:last-child:nth-child(3n+1){grid-column:2}  /* center a lone last card */
+  @media(max-width:880px){.grid{grid-template-columns:1fr 1fr}.grid>.card:last-child:nth-child(3n+1){grid-column:auto}}
   @media(max-width:560px){.grid{grid-template-columns:1fr}}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
     padding:25px 23px;transition:.2s;box-shadow:0 2px 12px rgba(120,90,60,.05)}
@@ -384,6 +385,11 @@
         <h3 data-i18n="f6.t">なかま・配色・紙吹雪</h3>
         <p data-i18n="f6.p">たこ・ねこ・ひよこ・かえる・ロボの5匹から相棒を選択。5つの配色テーマ、3つ星クリアで紙吹雪のお祝い。</p>
       </div>
+      <div class="card">
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="4.5" y="7" width="15" height="11" rx="3" stroke="currentColor" stroke-width="1.8"/><path d="M12 4v3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="12" cy="3.6" r="1.1" fill="currentColor"/><circle cx="9.5" cy="12.5" r="1.3" fill="currentColor"/><circle cx="14.5" cy="12.5" r="1.3" fill="currentColor"/></svg></div>
+        <h3 data-i18n="f7.t">AI時代のことばにも、ふれる</h3>
+        <p data-i18n="f7.p">ロボット・データ・モデルなど、これからよく出会う言葉を打ちながら少しずつ。むずかしい説明はなく、あくまでタイピング練習の中で。</p>
+      </div>
     </div>
   </div>
 </section>
@@ -506,6 +512,7 @@ ja:{
 "f4.t":"次のキーが光る＋両手ガイド","f4.p":"次に押すキーが緑に光り、両手の運指イラストが「どの指か」をその場で案内。見ないで打つへ自然に。",
 "f5.t":"キーを音声で読み上げ","f5.p":"押すキーを声でガイド。文字が読めなくても遊べます。声のキャラクターも選べ、音声の言語は別に設定できます。",
 "f6.t":"なかま・配色・紙吹雪","f6.p":"たこ・ねこ・ひよこ・かえる・ロボの5匹から相棒を選択。5つの配色テーマ、3つ星クリアで紙吹雪のお祝い。",
+"f7.t":"AI時代のことばにも、ふれる","f7.p":"ロボット・データ・モデルなど、これからよく出会う言葉を打ちながら少しずつ。むずかしい説明はなく、あくまでタイピング練習の中で。",
 "learn.k":"How it grows","learn.h":"こどものペースで、少しずつ。","learn.p":"いきなり文章ではなく、ホームポジションから一段ずつ。できたを積み重ねて、短い文まで。",
 "s1.t":"ホームポジション","s1.s":"中段から指の家を","s2.t":"上段・下段","s2.s":"手を広げる","s3.t":"数字行","s3.s":"いちばん上まで","s4.t":"単語","s4.s":"つなげて打つ","s5.t":"短い文","s5.s":"見ないで打つへ",
 "priv.k":"Privacy by design","priv.h":"こどもに、安心して。","priv.p":"完全オフラインで動作し、広告も、アクセス解析も、第三者 SDK もありません。ユーザーデータを一切収集しません。",
@@ -529,6 +536,7 @@ en:{
 "f4.t":"Next key glows + hand guide","f4.p":"The next key glows green, and a two-hands diagram shows exactly which finger — guiding kids naturally toward typing blind.",
 "f5.t":"Spoken target keys","f5.p":"Each key is read aloud, so pre-readers can play too. Pick a voice character, and set the voice language separately.",
 "f6.t":"Friends, themes, confetti","f6.p":"Pick your buddy from 5 — octopus, cat, chick, frog, robot. Five color themes, and confetti on a 3-star clear.",
+"f7.t":"A taste of AI-era words","f7.p":"Type words like robot, data, and model — vocabulary kids will meet more and more. No heavy lessons, just familiar words inside typing practice.",
 "learn.k":"How it grows","learn.h":"At a kid's pace, little by little.","learn.p":"Not whole sentences from day one — one row at a time, starting at the home row. Wins add up, all the way to short sentences.",
 "s1.t":"Home row","s1.s":"A home for each finger","s2.t":"Top & bottom","s2.s":"Reach out","s3.t":"Number row","s3.s":"All the way up","s4.t":"Words","s4.s":"String them together","s5.t":"Short sentences","s5.s":"Type without looking",
 "priv.k":"Privacy by design","priv.h":"Peace of mind, for kids.","priv.p":"Works fully offline. No ads, no analytics, no third-party SDKs. We do not collect any user data.",
@@ -552,6 +560,7 @@ zh:{
 "f4.t":"下一个键发光＋双手引导","f4.p":"下一个要按的键会发绿光，双手运指图当场指出「用哪根手指」，自然走向不看键盘。",
 "f5.t":"语音朗读目标键","f5.p":"每个键都会读出声，还不识字也能玩。可选语音角色，语音语言也能单独设置。",
 "f6.t":"伙伴 · 配色 · 彩纸","f6.p":"章鱼、猫、小鸡、青蛙、机器人，5 个伙伴任选。5 套配色主题，三星通关还有彩纸庆祝。",
+"f7.t":"顺手认识 AI 时代的词","f7.p":"在打字练习里顺手敲到「机器人・数据・模型」这些词，让孩子对 AI 时代的常见词不陌生。不讲大道理，只是练打字。",
 "learn.k":"学习路径","learn.h":"按孩子的节奏，一点一点来。","learn.p":"不是一上来就打整句，而是从基准键位一排一排来。把「做到了」叠起来，一直到短句。",
 "s1.t":"基准键位","s1.s":"先给手指安个家","s2.t":"上排・下排","s2.s":"伸展手指","s3.t":"数字行","s3.s":"够到最上排","s4.t":"单词","s4.s":"连起来打","s5.t":"短句","s5.s":"走向盲打",
 "priv.k":"隐私优先","priv.h":"让孩子，放心玩。","priv.p":"完全离线运行。没有广告、没有统计分析、没有任何第三方 SDK。我们不收集任何用户数据。",
