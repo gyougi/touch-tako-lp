@@ -9,6 +9,10 @@
   body { font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Segoe UI", Roboto, "Noto Sans CJK SC", sans-serif;
          line-height: 1.75; max-width: 720px; margin: 0 auto; padding: 40px 20px 80px;
          color: #1c1c1e; background: #fff; }
+/* Han glyph shapes differ per language, so Chinese must not fall through to
+   the Japanese font above. Scoped by html[lang], which the switcher sets. */
+html[lang="zh-Hans"] body,html[lang="zh"] body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans SC","Microsoft YaHei","Segoe UI",sans-serif}
+
   @media (prefers-color-scheme: dark) { body { color: #e6e6e6; background: #121212; } a { color: #ffab91; } }
   h1 { font-size: 1.6rem; } h2 { font-size: 1.1rem; margin-top: 1.8em; }
   .lang { color: #888; font-size: .85rem; letter-spacing: .04em; text-transform: uppercase; margin-top: 3em; }

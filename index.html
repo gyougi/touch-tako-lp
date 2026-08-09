@@ -22,6 +22,11 @@
     --font:"Noto Sans JP",-apple-system,BlinkMacSystemFont,"Hiragino Sans","PingFang SC","Microsoft YaHei","Segoe UI",sans-serif;
     --display:"Baloo 2",var(--font);
   }
+
+/* Han glyph shapes differ per language, so Chinese must not fall through to
+   the Japanese font above. Scoped by html[lang], which the switcher sets. */
+html[lang="zh-Hans"]{--font:"Noto Sans SC","PingFang SC","Noto Sans SC","Microsoft YaHei",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
   body{
