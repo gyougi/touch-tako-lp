@@ -1,36 +1,26 @@
 <!DOCTYPE html>
-<!-- 由 build.py 自动生成，请勿直接编辑。
-     改文案 → src/i18n.js，改结构 → src/index.html，然后跑 python3 build.py -->
-
-<html lang="ja" data-lang="ja">
+<html lang="{{HTMLLANG}}" data-lang="{{LANG}}">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Touch Tako タッチタコ — こどものタッチタイピング for Mac</title>
-<meta name="description" content="たこと一緒に、こどものタッチタイピング。ホームポジションから単語・短い文まで。指ごとに色分けされたキーボードと、できたら一緒によろこぶ 2.5D のたこ。完全オフライン、広告なし。">
+<title>{{TITLE}}</title>
+<meta name="description" content="{{DESC}}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Touch Tako">
-<meta property="og:title" content="Touch Tako タッチタコ — こどものタッチタイピング for Mac">
-<meta property="og:description" content="たこと一緒に、こどものタッチタイピング。完全オフライン、広告なし。">
-<meta property="og:url" content="https://touchtako.glspace.co.jp/">
+<meta property="og:title" content="{{TITLE}}">
+<meta property="og:description" content="{{OGDESC}}">
+<meta property="og:url" content="{{URL}}">
 <meta property="og:image" content="https://touchtako.glspace.co.jp/icon.png">
 <meta property="og:image:alt" content="Touch Tako">
-<meta property="og:locale" content="ja_JP">
-<meta property="og:locale:alternate" content="en_US" />
-<meta property="og:locale:alternate" content="zh_CN" />
+<meta property="og:locale" content="{{OGLOCALE}}">{{OGALT}}
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Touch Tako タッチタコ — こどものタッチタイピング for Mac">
-<meta name="twitter:description" content="たこと一緒に、こどものタッチタイピング。完全オフライン、広告なし。">
+<meta name="twitter:title" content="{{TITLE}}">
+<meta name="twitter:description" content="{{OGDESC}}">
 <meta name="twitter:image" content="https://touchtako.glspace.co.jp/icon.png">
-<link rel="canonical" href="https://touchtako.glspace.co.jp/" />
-<link rel="alternate" hreflang="ja" href="https://touchtako.glspace.co.jp/" />
-<link rel="alternate" hreflang="en" href="https://touchtako.glspace.co.jp/en/" />
-<link rel="alternate" hreflang="zh-Hans" href="https://touchtako.glspace.co.jp/zh/" />
-<link rel="alternate" hreflang="x-default" href="https://touchtako.glspace.co.jp/" />
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://touchtako.glspace.co.jp/#org","name":"GLSPACE Co., Ltd.","url":"https://touchtako.glspace.co.jp/","email":"support@glspace.co.jp"},{"@type":"WebSite","@id":"https://touchtako.glspace.co.jp/#website","url":"https://touchtako.glspace.co.jp/","name":"Touch Tako","inLanguage":"ja","publisher":{"@id":"https://touchtako.glspace.co.jp/#org"}},{"@type":"SoftwareApplication","@id":"https://touchtako.glspace.co.jp/#app","name":"Touch Tako","applicationCategory":"EducationalApplication","operatingSystem":"macOS","description":"たこと一緒に、こどものタッチタイピング。ホームポジションから単語・短い文まで。指ごとに色分けされたキーボードと、できたら一緒によろこぶ 2.5D のたこ。完全オフライン、広告なし。","url":"https://touchtako.glspace.co.jp/","installUrl":"https://apps.apple.com/app/id6782324502","image":"https://touchtako.glspace.co.jp/icon.png","inLanguage":["ja","en","zh-Hans"],"publisher":{"@id":"https://touchtako.glspace.co.jp/#org"}}]}</script>
+{{HEADEXTRA}}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+JP:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+{{FONTS}}
 <link rel="icon" type="image/png" href="/icon.png">
 <link rel="apple-touch-icon" href="/icon.png">
 <style>
@@ -278,17 +268,17 @@ html[lang="zh-Hans"]{--font:"Noto Sans SC","PingFang SC","Noto Sans SC","Microso
     </div>
     <div class="nav-right">
       <div class="lang" id="lang">
-        <a class="on" data-lang="ja" href="/" hreflang="ja">JA</a><a class="" data-lang="en" href="/en/" hreflang="en">EN</a><a class="" data-lang="zh" href="/zh/" hreflang="zh-Hans">SC</a>
+        <a class="{{ACT_ja}}" data-lang="ja" href="{{HREF_ja}}" hreflang="{{HL_ja}}">JA</a><a class="{{ACT_en}}" data-lang="en" href="{{HREF_en}}" hreflang="{{HL_en}}">EN</a><a class="{{ACT_zh}}" data-lang="zh" href="{{HREF_zh}}" hreflang="{{HL_zh}}">SC</a>
       </div>
       <div class="lang-dd">
         <button class="lang-dd-btn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-label="言語 / Language">
-          <span class="lang-dd-cur">日本語</span>
+          <span class="lang-dd-cur">{{LANGNAME}}</span>
           <svg class="lang-dd-ch" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="lang-dd-menu" role="listbox">
-          <a class="lang-dd-opt" role="option" data-lang="ja" aria-selected="true" href="/" hreflang="ja">日本語<svg class="lang-dd-ck" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></a>
-          <a class="lang-dd-opt" role="option" data-lang="en" aria-selected="false" href="/en/" hreflang="en">English<svg class="lang-dd-ck" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></a>
-          <a class="lang-dd-opt" role="option" data-lang="zh" aria-selected="false" href="/zh/" hreflang="zh-Hans">简体中文<svg class="lang-dd-ck" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></a>
+          <a class="lang-dd-opt" role="option" data-lang="ja" aria-selected="{{SEL_ja}}" href="{{HREF_ja}}" hreflang="{{HL_ja}}">日本語<svg class="lang-dd-ck" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></a>
+          <a class="lang-dd-opt" role="option" data-lang="en" aria-selected="{{SEL_en}}" href="{{HREF_en}}" hreflang="{{HL_en}}">English<svg class="lang-dd-ck" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></a>
+          <a class="lang-dd-opt" role="option" data-lang="zh" aria-selected="{{SEL_zh}}" href="{{HREF_zh}}" hreflang="{{HL_zh}}">简体中文<svg class="lang-dd-ck" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5L20 7"/></svg></a>
         </div>
       </div>
       <a class="btn btn-primary nav-cta" href="https://apps.apple.com/app/id6782324502"><span data-i18n="cta.get">入手</span></a>
@@ -300,7 +290,7 @@ html[lang="zh-Hans"]{--font:"Noto Sans SC","PingFang SC","Noto Sans SC","Microso
 <header id="top" class="wrap hero">
   <div>
     <span class="pill"><span class="dot"></span><span data-i18n="hero.badge">完全オフライン・こども向け</span></span>
-    <h1 data-i18n="hero.title">たこと学ぶ、<br>はじめての<span class='accent'>タッチタイピング</span>。</h1>
+    <h1 data-i18n="hero.title">たこと学ぶ、<br>はじめての<span class="accent">タッチタイピング</span>。</h1>
     <p class="lead" data-i18n="hero.lead">ホームポジションから単語・短い文まで。指ごとに色分けされたキーボードと、できたら一緒によろこぶ 2.5D のたこ。Mac で、こどものペースで。</p>
     <div class="hero-cta">
       <a class="btn btn-primary" href="https://apps.apple.com/app/id6782324502">
@@ -480,7 +470,7 @@ html[lang="zh-Hans"]{--font:"Noto Sans SC","PingFang SC","Noto Sans SC","Microso
         <li><span class="chk"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span data-i18n="plan.1">全34レッスン以上 × 日本語・英語・中国語</span></li>
         <li><span class="chk"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span data-i18n="plan.2">5匹のなかま・5つの配色テーマ</span></li>
         <li><span class="chk"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span data-i18n="plan.3">音声ガイド・キャラクターボイス</span></li>
-        <li><span class="chk"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span data-i18n="plan.4">月額なし・追加課金なし・端末内で完結</span></li>
+        <li><span class="chk"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M5 12l4 4L19 6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span data-i18n="plan.4">追加課金なし・端末内で完結</span></li>
       </ul>
       <div class="cta">
         <a class="btn btn-primary" href="https://apps.apple.com/app/id6782324502" style="width:100%;justify-content:center">
@@ -488,7 +478,7 @@ html[lang="zh-Hans"]{--font:"Noto Sans SC","PingFang SC","Noto Sans SC","Microso
           <span data-i18n="cta.appstore">Mac App Store でダウンロード</span>
         </a>
       </div>
-      <p class="fine" data-i18n="plan.fine">アプリ内課金（買い切り）は購入確認時に Apple ID へ1回だけ課金されます。サブスクリプションではないので、自動更新も解約の手続きもありません。機種変更や再インストールのあとは、アプリ内の「購入を復元」でいつでも戻せます。<a href='https://touchtako.glspace.co.jp/terms.html'>利用規約</a> ・ <a href='https://touchtako.glspace.co.jp/privacy.html'>プライバシー</a></p>
+      <p class="fine" data-i18n="plan.fine">アプリ内課金（買い切り）は購入確認時に Apple ID へ1回だけ課金されます。サブスクリプションではないので、自動更新も解約の手続きもありません。機種変更や再インストールのあとは、アプリ内の「購入を復元」でいつでも戻せます。<a href="https://touchtako.glspace.co.jp/terms.html">利用規約</a> ・ <a href="https://touchtako.glspace.co.jp/privacy.html">プライバシー</a></p>
     </div>
   </div>
 </section>
@@ -532,70 +522,6 @@ html[lang="zh-Hans"]{--font:"Noto Sans SC","PingFang SC","Noto Sans SC","Microso
   </div>
 </footer>
 
-<script>
-(function(){
-  var dd=document.querySelector('.lang-dd'); if(!dd) return;
-  var btn=dd.querySelector('.lang-dd-btn');
-  var close=function(){dd.setAttribute('data-open','false');btn.setAttribute('aria-expanded','false');};
-  btn.addEventListener('click',function(e){e.stopPropagation();
-    var o=dd.getAttribute('data-open')==='true';
-    dd.setAttribute('data-open',String(!o));btn.setAttribute('aria-expanded',String(!o));});
-  document.addEventListener('click',function(e){if(!dd.contains(e.target))close();});
-})();
-// 首屏键盘演示：随机高亮按键并显示对应手指。与 i18n 无关，但依赖当前语言取手指名。
-// mockLang 由 build.py 按页面语言注入。
-var mockLang="ja", mockIdx=3; // start on F, matching the static markup
-var MOCK_KEYS=[
-  {k:'A',fin:{ja:'ひだりの こゆび',    en:'left pinky',   zh:'左手小指'}},
-  {k:'S',fin:{ja:'ひだりの くすりゆび', en:'left ring',    zh:'左手无名指'}},
-  {k:'D',fin:{ja:'ひだりの なかゆび',  en:'left middle',  zh:'左手中指'}},
-  {k:'F',fin:{ja:'ひだりの ひとさし指', en:'left index',   zh:'左手食指'}},
-  {k:'G',fin:{ja:'ひだりの ひとさし指', en:'left index',   zh:'左手食指'}},
-  {k:'H',fin:{ja:'みぎの ひとさし指',  en:'right index',  zh:'右手食指'}},
-  {k:'J',fin:{ja:'みぎの ひとさし指',  en:'right index',  zh:'右手食指'}},
-  {k:'K',fin:{ja:'みぎの なかゆび',   en:'right middle', zh:'右手中指'}},
-  {k:'L',fin:{ja:'みぎの くすりゆび',  en:'right ring',   zh:'右手无名指'}},
-  {k:';',fin:{ja:'みぎの こゆび',     en:'right pinky',  zh:'右手小指'}}
-];
-function renderMock(){
-  var step=MOCK_KEYS[mockIdx];
-  var t=document.querySelector('.key-target'); if(!t) return;
-  t.textContent=step.k;
-  var fin=document.querySelector('.prompt .fin'); if(fin) fin.textContent=step.fin[mockLang]||step.fin.ja;
-  document.querySelectorAll('.kbd .key').forEach(function(el,i){ el.classList.toggle('tk', i===mockIdx); });
-}
-renderMock();   // 初期表示（動きを減らす設定でもここは通す）
-
-(function(){
-  // Respect users who prefer reduced motion — leave it on a static "F".
-  if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  function nextKey(){
-    var n; do { n=Math.floor(Math.random()*MOCK_KEYS.length); } while(n===mockIdx);
-    mockIdx=n;
-    renderMock();
-    var t=document.querySelector('.key-target');
-    if(t&&t.animate) t.animate([{transform:'scale(.8)'},{transform:'scale(1.07)'},{transform:'scale(1)'}],{duration:340,easing:'cubic-bezier(.2,.8,.3,1)'});
-    setTimeout(nextKey, 850+Math.random()*750); // varied cadence, like real typing
-  }
-  setTimeout(nextKey, 1200);
-})();
-
-(function(){
-  var P={"en": "/en/", "zh": "/zh/"}, K={"en": "en", "zh": "zh"}, T={"en": "English version available", "zh": "查看简体中文版"}, D={"en": "en", "zh-Hans": "zh", "zh-Hant": "zh"};
-  var d=null,list=navigator.languages&&navigator.languages.length?navigator.languages:[navigator.language||''];
-  for(var i=0;i<list.length;i++){
-    var t=(list[i]||'').toLowerCase();
-    if(t.indexOf('ja')===0){return;}
-    if(t.indexOf('zh')===0){d=/hant|tw|hk|mo/.test(t)?D['zh-Hant']:D['zh-Hans'];break;}
-    if(t.indexOf('en')===0){d=D['en'];break;}
-  }
-  if(!d) d=D['en'];   /* 默认语言以外的其他语言（仏・独・韓など）は英語版へ */
-  if(!P[d]||!K[d]||!T[K[d]]) return;
-  var a=document.createElement('a');
-  a.className='langbar'; a.href=P[d]; a.setAttribute('hreflang',d);
-  a.textContent=T[K[d]]+' \u2192';
-  document.body.insertBefore(a,document.body.firstChild);
-})();
-</script>
+{{SCRIPT}}
 </body>
 </html>
