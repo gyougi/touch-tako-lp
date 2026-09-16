@@ -20,6 +20,10 @@ import sys
 SITE = "https://touchtako.glspace.co.jp"
 APP_NAME = "Touch Tako"
 APPSTORE = "https://apps.apple.com/app/id6782324502"
+# App Store 上の実際の表示名（typing-kids/docs/app-store-listing.md「1. 名称」の表）
+STORE_NAMES = ["Touch Tako タッチタコ", "Touch Tako", "Touch Tako 章鱼打字"]
+ORG_URL = "https://glspace.co.jp/"
+ORG_SAMEAS = ["https://apps.glspace.co.jp/"]
 ORG = "GLSPACE Co., Ltd."
 SUPPORT_MAIL = "support@glspace.co.jp"
 OG_IMAGE = SITE + "/icon.png"
@@ -139,12 +143,14 @@ def head_extra(lang, d):
 
     graph = [
         {"@type": "Organization", "@id": SITE + "/#org", "name": ORG,
-         "url": SITE + "/", "email": SUPPORT_MAIL},
+         "url": ORG_URL, "sameAs": ORG_SAMEAS, "email": SUPPORT_MAIL},
         {"@type": "WebSite", "@id": url + "#website", "url": url,
          "name": APP_NAME, "inLanguage": cfg["htmllang"],
          "publisher": {"@id": SITE + "/#org"}},
         # 不写 offers / aggregateRating：站上不标金额，评分也没有真实数据，不编。
         {"@type": "SoftwareApplication", "@id": SITE + "/#app", "name": APP_NAME,
+         "alternateName": [n for n in dict.fromkeys(STORE_NAMES) if n != APP_NAME],
+         "sameAs": [APPSTORE],
          "applicationCategory": APP_CATEGORY, "operatingSystem": APP_OS,
          "description": plain(d["meta.desc"]), "url": url, "installUrl": APPSTORE,
          "image": OG_IMAGE,

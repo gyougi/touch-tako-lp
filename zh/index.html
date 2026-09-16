@@ -27,7 +27,7 @@
 <link rel="alternate" hreflang="en" href="https://touchtako.glspace.co.jp/en/" />
 <link rel="alternate" hreflang="zh-Hans" href="https://touchtako.glspace.co.jp/zh/" />
 <link rel="alternate" hreflang="x-default" href="https://touchtako.glspace.co.jp/" />
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://touchtako.glspace.co.jp/#org","name":"GLSPACE Co., Ltd.","url":"https://touchtako.glspace.co.jp/","email":"support@glspace.co.jp"},{"@type":"WebSite","@id":"https://touchtako.glspace.co.jp/zh/#website","url":"https://touchtako.glspace.co.jp/zh/","name":"Touch Tako","inLanguage":"zh-Hans","publisher":{"@id":"https://touchtako.glspace.co.jp/#org"}},{"@type":"SoftwareApplication","@id":"https://touchtako.glspace.co.jp/#app","name":"Touch Tako","applicationCategory":"EducationalApplication","operatingSystem":"macOS","description":"和小章鱼一起学盲打。从基准键位到单词、短句，配上按手指分色的键盘，和一只做对了会一起高兴的 2.5D 小章鱼。完全离线，无广告，不收集数据。","url":"https://touchtako.glspace.co.jp/zh/","installUrl":"https://apps.apple.com/app/id6782324502","image":"https://touchtako.glspace.co.jp/icon.png","inLanguage":["ja","en","zh-Hans"],"publisher":{"@id":"https://touchtako.glspace.co.jp/#org"}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://touchtako.glspace.co.jp/#org","name":"GLSPACE Co., Ltd.","url":"https://glspace.co.jp/","sameAs":["https://apps.glspace.co.jp/"],"email":"support@glspace.co.jp"},{"@type":"WebSite","@id":"https://touchtako.glspace.co.jp/zh/#website","url":"https://touchtako.glspace.co.jp/zh/","name":"Touch Tako","inLanguage":"zh-Hans","publisher":{"@id":"https://touchtako.glspace.co.jp/#org"}},{"@type":"SoftwareApplication","@id":"https://touchtako.glspace.co.jp/#app","name":"Touch Tako","alternateName":["Touch Tako タッチタコ","Touch Tako 章鱼打字"],"sameAs":["https://apps.apple.com/app/id6782324502"],"applicationCategory":"EducationalApplication","operatingSystem":"macOS","description":"和小章鱼一起学盲打。从基准键位到单词、短句，配上按手指分色的键盘，和一只做对了会一起高兴的 2.5D 小章鱼。完全离线，无广告，不收集数据。","url":"https://touchtako.glspace.co.jp/zh/","installUrl":"https://apps.apple.com/app/id6782324502","image":"https://touchtako.glspace.co.jp/icon.png","inLanguage":["ja","en","zh-Hans"],"publisher":{"@id":"https://touchtako.glspace.co.jp/#org"}},{"@type":"FAQPage","@id":"https://touchtako.glspace.co.jp/zh/#faq","inLanguage":"zh-Hans","mainEntity":[{"@type":"Question","name":"有没有适合孩子在 Mac 上练习盲打的应用？","acceptedAnswer":{"@type":"Answer","text":"Touch Tako（章鱼打字）是一款 Mac 应用（macOS 14 及以上），让孩子和一只小章鱼一起练习盲打。从基准键位开始，循序渐进到上排／下排、数字行、单词和短句，每种语言都有到小学水平的 34 节以上课程。"}},{"@type":"Question","name":"Touch Tako 是订阅制吗？","acceptedAnswer":{"@type":"Answer","text":"不是，Touch Tako 不是订阅。应用免费下载，前 7 天可试用全部课程与功能。试用结束后，第 1～12 节课程永久免费，其余课程通过一次性买断内购解锁。不会自动续费，也无需取消。"}},{"@type":"Question","name":"Touch Tako 不联网也能用吗？","acceptedAnswer":{"@type":"Answer","text":"可以。Touch Tako 的全部学习功能都在 Mac 本地运行，可离线使用，仅在购买与恢复购买时与 App Store 通信。学习进度保存在 Mac 本机。"}},{"@type":"Question","name":"Touch Tako 会收集孩子的数据或显示广告吗？","acceptedAnswer":{"@type":"Answer","text":"不会。Touch Tako 没有广告、没有统计分析、没有任何第三方 SDK，不收集任何用户数据。进入设置与购买界面前，设有面向家长的简单算术「家长验证」。"}},{"@type":"Question","name":"Touch Tako 可以用哪些语言练习？","acceptedAnswer":{"@type":"Answer","text":"Touch Tako 支持日语、英语、简体中文，可在应用内随时切换。日语是看着假名（汉字＋振假名）打罗马字，中文是看着汉字＋拼音打拼音。"}},{"@type":"Question","name":"还不识字的孩子能用 Touch Tako 吗？","acceptedAnswer":{"@type":"Answer","text":"Touch Tako 会用语音朗读要按的键，不识字也能玩。下一个要按的键会发绿光，双手运指图会提示该用哪根手指。"}}]}]}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -195,6 +195,12 @@ html[lang="zh-Hans"]{--font:"Noto Sans SC","PingFang SC","Noto Sans SC","Microso
   .card.peach .ic{background:var(--peach-soft);color:var(--peach)}
   .card h3{font-size:17px;font-weight:700;margin-bottom:8px;text-wrap:balance}
   .card p{font-size:14px;color:var(--ink2);text-wrap:pretty}
+
+  /* FAQ（FAQPage JSON-LD と同じ辞書キーから生成） */
+  .faq-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:980px;margin:0 auto}
+  @media(max-width:700px){.faq-list{grid-template-columns:minmax(0,1fr)}}
+  .faq-list .card h3,.faq-list .card p{overflow-wrap:anywhere}
+  .faq-list .card p{line-height:1.75}
 
   /* curriculum steps */
   .steps-band{background:linear-gradient(180deg,#fff,#fffaf4);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -489,6 +495,24 @@ html[lang="zh-Hans"]{--font:"Noto Sans SC","PingFang SC","Noto Sans SC","Microso
         </a>
       </div>
       <p class="fine" data-i18n="plan.fine">内购（买断）在确认购买时从你的 Apple ID 一次性扣费。它不是订阅，不会自动续费，也无需取消。换电脑或重装后，在应用内点「恢复购买」即可找回。<a href='https://touchtako.glspace.co.jp/terms.html'>使用条款</a> · <a href='https://touchtako.glspace.co.jp/privacy.html'>隐私政策</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- =================== FAQ =================== -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="k" data-i18n="faq.k">FAQ</div>
+      <h2 data-i18n="faq.h">常见问题</h2>
+    </div>
+    <div class="faq-list">
+      <div class="card"><h3 data-i18n="faq.q1">有没有适合孩子在 Mac 上练习盲打的应用？</h3><p data-i18n="faq.a1">Touch Tako（章鱼打字）是一款 Mac 应用（macOS 14 及以上），让孩子和一只小章鱼一起练习盲打。从基准键位开始，循序渐进到上排／下排、数字行、单词和短句，每种语言都有到小学水平的 34 节以上课程。</p></div>
+      <div class="card"><h3 data-i18n="faq.q2">Touch Tako 是订阅制吗？</h3><p data-i18n="faq.a2">不是，Touch Tako 不是订阅。应用免费下载，前 7 天可试用全部课程与功能。试用结束后，第 1～12 节课程永久免费，其余课程通过一次性买断内购解锁。不会自动续费，也无需取消。</p></div>
+      <div class="card"><h3 data-i18n="faq.q3">Touch Tako 不联网也能用吗？</h3><p data-i18n="faq.a3">可以。Touch Tako 的全部学习功能都在 Mac 本地运行，可离线使用，仅在购买与恢复购买时与 App Store 通信。学习进度保存在 Mac 本机。</p></div>
+      <div class="card"><h3 data-i18n="faq.q4">Touch Tako 会收集孩子的数据或显示广告吗？</h3><p data-i18n="faq.a4">不会。Touch Tako 没有广告、没有统计分析、没有任何第三方 SDK，不收集任何用户数据。进入设置与购买界面前，设有面向家长的简单算术「家长验证」。</p></div>
+      <div class="card"><h3 data-i18n="faq.q5">Touch Tako 可以用哪些语言练习？</h3><p data-i18n="faq.a5">Touch Tako 支持日语、英语、简体中文，可在应用内随时切换。日语是看着假名（汉字＋振假名）打罗马字，中文是看着汉字＋拼音打拼音。</p></div>
+      <div class="card"><h3 data-i18n="faq.q6">还不识字的孩子能用 Touch Tako 吗？</h3><p data-i18n="faq.a6">Touch Tako 会用语音朗读要按的键，不识字也能玩。下一个要按的键会发绿光，双手运指图会提示该用哪根手指。</p></div>
     </div>
   </div>
 </section>
