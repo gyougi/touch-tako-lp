@@ -16,6 +16,11 @@ import re
 import subprocess
 import sys
 
+# ⚠️ 連絡先の正本は shared.py の CONTACT_MAIL 一か所。ここに素の字で書かない。
+from shared import (CONTACT_MAIL, check_mail_in_one_place,
+                    check_mail_matches, contact_label,
+                    file_sources, src_sources)
+
 # ─────────────────────────── 本站配置 ───────────────────────────
 SITE = "https://touchtako.glspace.co.jp"
 APP_NAME = "Touch Tako"
@@ -25,7 +30,17 @@ STORE_NAMES = ["Touch Tako タッチタコ", "Touch Tako", "Touch Tako 章鱼打
 ORG_URL = "https://glspace.co.jp/"
 ORG_SAMEAS = ["https://apps.glspace.co.jp/"]
 ORG = "GLSPACE Co., Ltd."
-SUPPORT_MAIL = "support@glspace.co.jp"
+SUPPORT_MAIL = CONTACT_MAIL    # ⚠️ 正本は shared.py 一か所
+
+# 生成していない頁。ここには住所を素の字で書くしかないので、
+# **正本と同じかどうかを build のたびに照合する**（違えば止まる）。
+# ⚠️ 頁を足したら・名を変えたらここも直す（名簿が空振りすると止まる）。
+HANDWRITTEN_PAGES = (
+    "support.html",
+    "terms.html",
+    "privacy.html",
+)
+
 OG_IMAGE = SITE + "/icon.png"
 APP_CATEGORY = "EducationalApplication"
 APP_OS = "macOS"
@@ -231,6 +246,9 @@ def script(lang, bar):
 
 
 def main():
+    # ⚠️ 源に素の連絡先が書かれていたら、ここで止まる（正本は shared.py 一か所）。
+    check_mail_in_one_place(src_sources(ROOT))
+    check_mail_matches(file_sources(ROOT, HANDWRITTEN_PAGES))
     alld = load_dict()
     bar = json.load(open(os.path.join(ROOT, "src/langbar.json"), encoding="utf-8"))
     tmpl = open(os.path.join(ROOT, "src/index.html"), encoding="utf-8").read()
@@ -253,6 +271,7 @@ def main():
             "URL": SITE + cfg["path"], "OGLOCALE": cfg["locale"], "OGALT": oth,
             "FONTS": fonts(lang), "HEADEXTRA": head_extra(lang, d),
             "LANGNAME": cfg["name"], "SCRIPT": script(lang, bar),
+            "MAIL": CONTACT_MAIL, "CONTACTLABEL": html.escape(contact_label(lang)),
         }
         for l2, c2 in LANGS.items():
             vals["HREF_" + l2] = c2["path"]
