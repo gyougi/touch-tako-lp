@@ -17,6 +17,7 @@ import subprocess
 import sys
 
 # ⚠️ 連絡先の正本は shared.py の CONTACT_MAIL 一か所。ここに素の字で書かない。
+from company_mark import add_company_mark
 from shared import (CONTACT_MAIL, check_mail_in_one_place,
                     check_mail_matches, contact_label,
                     file_sources, src_sources)
@@ -287,7 +288,7 @@ def main():
         page = page.replace("<!DOCTYPE html>", "<!DOCTYPE html>\n" + BANNER, 1)
         outdir = os.path.join(ROOT, cfg["out"])
         os.makedirs(outdir, exist_ok=True)
-        open(os.path.join(outdir, "index.html"), "w", encoding="utf-8").write(page)
+        open(os.path.join(outdir, "index.html"), "w", encoding="utf-8").write(add_company_mark(page))
         print("  %-9s → %-12s %3d 键  %6.1f KB"
               % (lang, cfg["path"], len(used), len(page.encode()) / 1024))
 
